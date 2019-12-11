@@ -54,13 +54,11 @@ class AzureAdUser(models.Model):
     # -----------
     # Token Logic
     # -----------
-    @api.multi
     def set_refresh_token(self):
         """Sets the Refresh Token for an Azure AD OAuth Login"""
 
         self.set_token('authorization_code', 'code', self.authentication_code)
 
-    @api.multi
     def set_access_token(self):
         """Sets the Access Token for an Azure AD OAuth Login"""
 
@@ -135,21 +133,18 @@ class AzureAdUser(models.Model):
     # Requests
     # --------
     # GET
-    @api.multi
     def get_data(self, domain=None, url=None, data_id=None, headers=None):
         """Performs a GET Request to the Azure AD Endpoint for this user."""
 
         return self.aad_request(method='GET', url=url, domain=domain, data_id=data_id, headers=headers, force=True)
 
     # POST
-    @api.multi
     def post_data(self, domain, data, data_id=None, link=None, force=False):
         """Performs a POST Request to the Azure AD Endpoint for this user."""
 
         return self.aad_request(method='POST', domain=domain, data_id=data_id, data=data, link=link, force=force)
 
     # DELETE
-    @api.multi
     def delete_data(self, domain, data_id=None, link=None, force=False, escalate=True):
         """Performs a DELETE Request to the Azure AD Endpoint for this user."""
 
@@ -171,14 +166,12 @@ class AzureAdUser(models.Model):
             return False
 
     # PATCH
-    @api.multi
     def patch_data(self, domain, data, data_id=None, link=None, force=False):
         """Performs a PATCH Request to the Azure AD Endpoint for this user."""
 
         return self.aad_request(method='PATCH', domain=domain, data_id=data_id, data=data, link=link, force=force)
 
     # SYNC
-    @api.multi
     def sync_request(self, domain=None, url=None, data=None, headers=None):
         sync_headers = {'Prefer': 'odata.track-changes, odata.maxpagesize=200, outlook.body-content-type="text"'}
 
@@ -371,7 +364,6 @@ class AzureAdUser(models.Model):
         return hashlib.sha256(str(random()).encode('utf-8')).hexdigest()
 
     # URL
-    @api.multi
     def get_authorize_url(self):
         """Returns the Azure AD Authorize URL"""
 
@@ -501,7 +493,6 @@ class AzureAdUser(models.Model):
     # ---------
     # Overrides
     # ---------
-    @api.multi
     def name_get(self):
         return [(user.id, user.email) for user in self]
 
@@ -513,7 +504,6 @@ class AzureAdUser(models.Model):
 
         return res
 
-    @api.multi
     def unlink(self):
         # Cancel Push Queue, other queues and links get unlinked automatically
 
