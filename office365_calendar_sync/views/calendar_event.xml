@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_calendar_event_form_modif_calendar_sync" model="ir.ui.view">
+            <field name="name">calendar.event.form</field>
+            <field name="model">calendar.event</field>
+            <field name="inherit_id" ref="calendar.view_calendar_event_form"/>
+            <field name="arch" type="xml">
+                <field name="recurrency" position="replace">
+                    <field name="from_outlook" invisible="1" />
+
+                    <p attrs="{'invisible': [('from_outlook', '=', False)]}" colspan="2">Created in Outlook</p>
+                  
+                    <field attrs="{'invisible': [('from_outlook', '=', False)]}" name="outlook_owner_email" string="Outlook Owner" readonly="1"/>
+                   
+                    <field name="recurrency" attrs="{'invisible': [('from_outlook', '=', True)]}"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

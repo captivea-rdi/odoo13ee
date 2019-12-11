@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="azure_ad_calendar_rule_user" model="ir.rule">
+            <field name="name">Azure AD Calendar Rule User</field>
+            <field name="model_id" ref="model_azure_ad_calendar"/>
+            <field name="domain_force">[('azure_ad_user_id.partner_id', '=', user.partner_id.id)]</field>
+            <field name="groups" eval="[(4, ref('office365_framework.group_office365_sync_user'))]"/>
+            <field eval="1" name="perm_unlink"/>
+            <field eval="1" name="perm_write"/>
+            <field eval="1" name="perm_read"/>
+            <field eval="1" name="perm_create"/>
+        </record>
+    </data>
+</odoo>
