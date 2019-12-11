@@ -19,7 +19,6 @@ class ResCompany(models.Model):
         config.set_param('office365.oauth.client.id', self.aad_oauth_client_id)
         config.set_param('office365.oauth.client.secret', self.aad_oauth_client_secret)
 
-    @api.multi
     def _compute_aad_values(self):
         config = self.env['ir.config_parameter'].sudo()
 
@@ -29,7 +28,6 @@ class ResCompany(models.Model):
             company.aad_oauth_client_id = config.get_param('office365.oauth.client.id', False)
             company.aad_oauth_client_secret = config.get_param('office365.oauth.client.secret', False)
 
-    @api.multi
     def write(self, vals):
         to_update = []
 
