@@ -44,7 +44,6 @@ class AzureAdUserSubscription(models.Model):
 
         return res
 
-    @api.multi
     def unlink(self):
         for sub in self:
             try:
