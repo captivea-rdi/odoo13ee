@@ -39,7 +39,6 @@
 		<record id="action_azure_ad_user_record_link" model="ir.actions.act_window">
 			<field name="name">User Record Links</field>
 			<field name="res_model">azure.ad.user.record.link</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="help" type="html">
                 <p></p>
