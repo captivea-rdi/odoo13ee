@@ -43,7 +43,6 @@ custom = {
                 raise ValidationError(msg)
 
     # Context parser
-    @api.multi
     def get_custom_value_dict(self):
         eval_context = self._get_eval_context()
 
@@ -54,7 +53,6 @@ custom = {
         else:
             return False
 
-    @api.multi
     def _get_eval_context(self):
         return {
             'env': self.env,
