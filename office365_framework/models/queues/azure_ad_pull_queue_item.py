@@ -22,10 +22,9 @@ class AzureAdPullQueueItem(models.Model):
     # ----------------
     # Queue Processing
     # ----------------
-    @api.one
     def process(self, updated=0):
         """Method that get's triggered with cron jobs. Should be overridden in other modules"""
-
+        self.ensure_one()
         if self.status != 'failed':
             self.unlink()
 

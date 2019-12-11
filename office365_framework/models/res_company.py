@@ -10,8 +10,8 @@ class ResCompany(models.Model):
     aad_oauth_client_id = fields.Char(string='Application Id', compute='_compute_aad_values', inverse='_set_aad_values')
     aad_oauth_client_secret = fields.Char(string='Password', compute='_compute_aad_values', inverse='_set_aad_values')
 
-    @api.one
     def _set_aad_values(self):
+        self.ensure_one()
         config = self.env['ir.config_parameter'].sudo()
 
         config.set_param('office365.oauth.enabled', self.aad_oauth_enabled)

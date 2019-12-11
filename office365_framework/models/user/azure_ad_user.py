@@ -64,9 +64,9 @@ class AzureAdUser(models.Model):
 
         self.set_token('refresh_token', 'refresh_token', self.refresh_token)
 
-    @api.one
     def set_token(self, grant_type, code_type, code):
         """Sets the Tokens for an Azure AD OAuth Login"""
+        self.ensure_one()
 
         try:
             response = self.get_token(grant_type, code_type, code)
@@ -546,9 +546,9 @@ class AzureAdUser(models.Model):
     # ---------------
     # Webhook Removal
     # ---------------
-    @api.one
     def remove_webhook(self):
         """Setup Syncing, should be extended in other modules."""
+        self.ensure_one()
 
         # Remove Subscriptions
         self.azure_ad_subscription_ids.unlink()
@@ -573,16 +573,14 @@ class AzureAdUser(models.Model):
     def get_azure_ad_scope(self):
         return AZURE_AD_SCOPE
 
-    @api.one
     def init_webhook(self):
         """Setup Syncing, should be extended in other modules."""
-
+        self.ensure_one()
         return
 
-    @api.one
     def init_sync(self):
         """Setup Syncing, should be extended in other modules."""
-
+        self.ensure_one()
         self.azure_ad_sync_started = True
 
         self.env['azure.ad.pull.queue.item'].create({
@@ -591,10 +589,10 @@ class AzureAdUser(models.Model):
 
         return
 
-    @api.one
     def validate_fields(self):
         """Validates field if they are correctly filled in, should be extended in other modules."""
-
+        self.ensure_one()
+        
         # Tests if user is logged in correctly
         self.set_access_token()
         if self.authentication_failure:
