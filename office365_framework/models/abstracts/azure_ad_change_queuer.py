@@ -14,7 +14,6 @@ class AzureADChangeQueuer(models.AbstractModel):
     change_last_write = fields.Datetime(string="Change Queue Last Write")
     change_original_values = fields.Char(string="JSON Object which holds the previously synced values")
 
-    @api.multi
     def write(self, vals):
         is_o_value_update = self.env.context.get('is_o_value_update')
         is_external_change = self.env.context.get('is_external_change')
@@ -85,13 +84,11 @@ class AzureADChangeQueuer(models.AbstractModel):
 
             return self
 
-    @api.multi
     def unlink(self):
         self.remove_links()
 
         return super(AzureADChangeQueuer, self).unlink()
 
-    @api.multi
     def remove_links(self):
         for record in self:
             domain = record.get_record_link_domain()
@@ -99,7 +96,6 @@ class AzureADChangeQueuer(models.AbstractModel):
             self.env['azure.ad.user.record.link'].sudo().search(domain).delete()
             self.env['azure.ad.change.queue.item'].sudo().search(domain).unlink()
 
-    @api.multi
     def extract_changed(self, data):
         self.ensure_one()
 
@@ -156,11 +152,9 @@ class AzureADChangeQueuer(models.AbstractModel):
         _logger.info('AzureAD Change item created for %s' % record)
 
 
-    @api.multi
     def get_links(self):
         return self.env['azure.ad.user.record.link'].sudo().search(self.get_record_link_domain())
 
-    @api.multi
     def get_extra_custom_values(self):
         customs = self.env['custom.sync.value'].sudo().search([('model_id.model', '=', self._name), ('active', '=', True)])
 
@@ -203,7 +197,6 @@ class AzureADChangeQueuer(models.AbstractModel):
         else:
             return b
 
-    @api.multi
     def get_azure_ad_template(self, change, is_child=False):
         template = self.prepare_azure_ad_template(change, is_child)
         extra_values = self.get_extra_custom_values()
@@ -216,7 +209,6 @@ class AzureADChangeQueuer(models.AbstractModel):
     # -----------
     # Overridable
     # -----------
-    @api.multi
     def prepare_azure_ad_template(self, change, is_child=False):
         return {}
 
@@ -224,7 +216,6 @@ class AzureADChangeQueuer(models.AbstractModel):
     def get_change_observed_values(self):
         return []
 
-    @api.multi
     def get_record_link_domain(self):
         return [('record', '=', '%s,%s' % (self._name, self.id))]
 
