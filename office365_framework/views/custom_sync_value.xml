@@ -54,7 +54,6 @@
         <record id="action_custom_sync_value" model="ir.actions.act_window">
             <field name="name">Custom Sync Values</field>
             <field name="res_model">custom.sync.value</field>
-            <field name="view_type">form</field>
             <field name="view_mode">list,form</field>
             <field name="help" type="html">
                 <p>
