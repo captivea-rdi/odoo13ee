@@ -20,7 +20,7 @@ class CalendarEvent(models.Model):
 
     outlook_categories = fields.Char('Categories from Outlook')
 
-    @api.multi
+    
     def write(self, vals):
         # Check if from outlook, prevent changes if original user not logged in
         if len(self) == 1 and self.from_outlook and self.outlook_owner_email:
@@ -126,7 +126,7 @@ class CalendarEvent(models.Model):
     # ---------
     # Overrides
     # ---------
-    @api.multi
+    
     def detach_recurring_event(self, values=None):
         res = super(CalendarEvent, self).detach_recurring_event(values=values)
 
@@ -135,7 +135,7 @@ class CalendarEvent(models.Model):
 
         return res
 
-    @api.multi
+    
     def unlink(self, can_be_deleted=True):
         self.remove_links()
 
@@ -144,7 +144,7 @@ class CalendarEvent(models.Model):
     # ------------------
     # Abstract Overrides
     # ------------------
-    @api.multi
+    
     def prepare_azure_ad_template(self, change, is_child=False):
         return AzureADEvent.get_azure_change_template(change, self)
 
@@ -152,6 +152,6 @@ class CalendarEvent(models.Model):
     def get_change_observed_values(self):
         return ['id', 'name', 'description', 'start', 'stop', 'allday', 'location', 'partner_ids', 'outlook_categories']
 
-    @api.multi
+    
     def get_record_link_domain(self):
         return ['|', ('record', '=', '%s,%s' % (self._name, self.id)), ('record', '=like', '%s,%s-%%' % (self._name, self.id))]

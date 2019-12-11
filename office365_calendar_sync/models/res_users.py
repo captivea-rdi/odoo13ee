@@ -9,7 +9,7 @@ class ResUsers(models.Model):
     azure_ad_calendar_ignore_without_category = fields.Boolean(string='Only Sync Calendar Items With Category', related='azure_ad_user_id.calendar_ignore_without_category', readonly=False)
     azure_ad_calendar_sync_failed = fields.Boolean(string='Calendar Sync Has Failed', related='azure_ad_user_id.calendar_sync_failed', readonly=False)
 
-    @api.multi
+    
     def action_reload_calendars(self):
         self.ensure_one()
 
@@ -19,7 +19,7 @@ class ResUsers(models.Model):
             'type': 'ir.actions.act_do_nothing'
         }
 
-    @api.multi
+    
     def action_start_calendar_sync(self):
         self.azure_ad_user_id.validate_fields()
         self.azure_ad_user_id.start_calendar_sync()
@@ -30,7 +30,7 @@ class ResUsers(models.Model):
     # -----------------------
     # Azure AD Setup Override
     # -----------------------
-    @api.multi
+    
     def aad_setup(self):
         res = super(ResUsers, self).aad_setup()
 

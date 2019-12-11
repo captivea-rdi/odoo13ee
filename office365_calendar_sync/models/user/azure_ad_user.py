@@ -102,7 +102,7 @@ class AzureAdUser(models.Model):
         if not self.calendar_id.exists_in_azure():
             raise ValidationError('%s\n\n%s' % (_('Outlook Calendar does not exists'), _('The chosen calendar does not exists (anymore). Please pick another calendar before starting the synchronisation.')))
 
-    @api.multi
+    
     def remove_unused_calendar_options(self):
         ids = self.calendar_option_ids.ids
 

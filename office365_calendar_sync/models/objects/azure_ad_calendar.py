@@ -37,7 +37,7 @@ class AzureADCalendar(models.Model):
     def to_azure_ad_template(self):
         return {'Name': self.name}
 
-    @api.multi
+    
     def get_events(self, delta_token=None):
         azure_events, delta_token_new = self.get_events_from_azure(delta_token)
         ignore_without_category = self.azure_ad_user_id.calendar_ignore_without_category
@@ -103,7 +103,7 @@ class AzureADCalendar(models.Model):
 
         return events
 
-    @api.multi
+    
     def get_events_from_azure(self, delta_token):
         start = datetime.utcnow() - timedelta(days=30)
         end = start + timedelta(days=530)
@@ -129,7 +129,7 @@ class AzureADCalendar(models.Model):
 
         return data['value'], AzureADCalendar.extract_delta_token(data['@odata.deltaLink'])
 
-    @api.multi
+    
     def get_changes(self):
         return self.get_events(self.delta_token)
 
@@ -264,7 +264,7 @@ class AzureADCalendar(models.Model):
     def post(self):
         self.uid = self.azure_ad_user_id.post_data(CALENDARS_CREATE_DOMAIN, self.to_azure_ad_template(), force=True)['Id']
 
-    @api.multi
+    
     def exists_in_azure(self):
         domain = CALENDAR_DATA_DOMAIN % self.uid
 
@@ -280,7 +280,7 @@ class AzureADCalendar(models.Model):
     # ------
     #  CRUD
     # ------
-    @api.multi
+    
     def unlink(self):
         for calendar in self:
             links = self.env['azure.ad.user.record.link'].sudo().search([('create_domain', 'like', calendar.uid)])

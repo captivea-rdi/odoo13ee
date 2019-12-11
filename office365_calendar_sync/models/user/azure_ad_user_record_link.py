@@ -5,7 +5,7 @@ from odoo import api, models
 class AzureAdUserRecordLink(models.Model):
     _inherit = 'azure.ad.user.record.link'
 
-    @api.multi
+    
     def write(self, vals):
         # Check if ical_uid update is necessary
         if 'ical_uid' in vals and self.record.from_outlook:
