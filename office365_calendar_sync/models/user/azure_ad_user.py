@@ -17,8 +17,8 @@ class AzureAdUser(models.Model):
     calendar_ignore_without_category = fields.Boolean(string='Only Sync Calendar Items With Category', default=True)
     calendar_sync_failed = fields.Boolean(string='Calendar sync has failed', default=False)
 
-    @api.one
     def reload_calendar_options(self):
+        self.ensure_one()
         # Unlink previous options
         self.calendar_option_ids.unlink()
 
@@ -53,9 +53,8 @@ class AzureAdUser(models.Model):
             r.update({'ical_uid': data['iCalUId']})
 
         return r
-
-    @api.one
     def init_webhook(self):
+        self.ensure_one()
         super(AzureAdUser, self).init_webhook()
         # WEBHOOK Re-enable after json/http logic in controller has been implemented
 
@@ -65,16 +64,16 @@ class AzureAdUser(models.Model):
         #     'change_type': CONTACTS_WEBHOOK_CHANGE_TYPE
         # })
 
-    @api.one
     def init_sync(self):
+        self.ensure_one()
         r = super(AzureAdUser, self).init_sync()
 
         self.start_calendar_sync()
 
         return r
 
-    @api.one
     def start_calendar_sync(self):
+        self.ensure_one()
         self.remove_unused_calendar_options()
 
         # Odoo -> Outlook
@@ -89,8 +88,8 @@ class AzureAdUser(models.Model):
 
         self.calendar_sync_failed = False
 
-    @api.one
     def validate_fields(self):
+        self.ensure_one()
         # Checks if calendar exists
         if not self.calendar_id:
             raise ValidationError('%s\n\n%s' % (_('No Outlook Calendar selected'), _('You have not chosen a calendar yet. Please pick a calendar before starting the synchronisation.')))

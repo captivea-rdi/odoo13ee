@@ -91,8 +91,8 @@ class CalendarEvent(models.Model):
 
         return res
 
-    @api.one
     def create_link(self, partner_id=None):
+        self.ensure_one()
         # Make eventTemplate
         ad_event = AzureADEvent(
             uid=self.id,

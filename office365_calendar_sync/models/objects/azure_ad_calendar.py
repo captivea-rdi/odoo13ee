@@ -33,8 +33,8 @@ class AzureADCalendar(models.Model):
     name = fields.Char(string='Name')
     delta_token = fields.Char(string='Delta Token')
 
-    @api.one
     def to_azure_ad_template(self):
+        self.ensure_one()
         return {'Name': self.name}
 
     
@@ -133,8 +133,8 @@ class AzureADCalendar(models.Model):
     def get_changes(self):
         return self.get_events(self.delta_token)
 
-    @api.one
     def sync(self):
+        self.ensure_one()
         updated_count = 0
         created_count = 0
         deleted_count = 0
@@ -242,8 +242,8 @@ class AzureADCalendar(models.Model):
 
         return updated_count + created_count + deleted_count
 
-    @api.one
     def create_outlook_event(self, odoo_event, ad_event, link_attendees=True):
+        self.ensure_one()
         ad_event.attendees_in_body = not link_attendees
         template = ad_event.get_azure_template()
 
@@ -260,8 +260,8 @@ class AzureADCalendar(models.Model):
             'data': template,
         })
 
-    @api.one
     def post(self):
+        self.ensure_one()
         self.uid = self.azure_ad_user_id.post_data(CALENDARS_CREATE_DOMAIN, self.to_azure_ad_template(), force=True)['Id']
 
     

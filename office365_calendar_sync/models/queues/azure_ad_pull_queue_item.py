@@ -13,8 +13,8 @@ class AzureAdPullQueueItem(models.Model):
     # ---------
     # Overrides
     # ---------
-    @api.one
     def process(self, updated=0):
+        self.ensure_one()
         if self.domain == 'calendar' or not self.domain:
             try:
                 updated += sum(self.user_id.calendar_id.sync())
