@@ -36,7 +36,6 @@
 		<record id="action_azure_ad_change_queue_item" model="ir.actions.act_window">
 			<field name="name">Change Queue</field>
 			<field name="res_model">azure.ad.change.queue.item</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="help" type="html">
                 <p></p>
