@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <data>
+        <record id="view_users_form_simple_modif_azuread" model="ir.ui.view">
+            <field name="name">res.users.preferences.form.azuread</field>
+            <field name="model">res.users</field>
+            <field name="inherit_id" ref="base.view_users_form_simple_modif"/>
+            <field name="arch" type="xml">
+                <xpath expr="//footer" position="before">
+                    <group name="office365_framework" string="Outlook Connector" col="1" colspan="2" attrs="{'invisible': [('azure_ad_allow_ad_login', '=', False)]}" groups="office365_framework.group_office365_sync_user">
+                        <field name="aad_email" invisible="1"/>
+                        <field name="azure_ad_sync_started" invisible="1"/>
+                        <field name="azure_ad_allow_ad_login" invisible="1"/>
+                        <field name="azure_ad_authentication_failure" invisible="1"/>
+                        <field name="azure_ad_user_id" invisible="1"/>
+
+                        <field name="azure_ad_last_error" attrs="{'invisible': ['|', ('azure_ad_last_error', '=', False), ('azure_ad_user_id', '=', False)]}" readonly="1" style="color: #c44a4a;"/>
+
+                        <div name="office365_oauth_connected" attrs="{'invisible': [('aad_email', '=', False)]}">
+                            <span>Currently connected with </span><field name="aad_email" readonly="1" class="oe_inline"/>
+
+                            <field name="azure_ad_last_sync" attrs="{'invisible': [('azure_ad_sync_started', '=', False)]}" readonly="1"/>
+
+                            <group colspan="2">
+                                <group>
+                                    <field name="outlook_category" attrs="{'readonly': [('azure_ad_sync_started', '=', True)]}"/>
+                                </group>
+                            </group>
+
+                            <div>
+                                <button name="action_start_sync_azure" type="object" string="Start Syncing" class="btn-primary" attrs="{'invisible': [('azure_ad_sync_started', '=', True)]}" style="margin-right:5px;"/>
+
+                                <button name="action_sync_azure" type="object" string="Sync" help="Force sync between Outlook and Odoo" class="btn-primary" attrs="{'invisible': [('azure_ad_sync_started', '=', False)]}" style="margin-right:5px;"/>
+
+                                <button name="action_oauth_aad_login" type="object" string="Authentication Failure - Login" attrs="{'invisible': [('azure_ad_authentication_failure', '=', False)]}" class="btn-primary" style="margin-right:5px;"/>
+                                <button name="action_oauth_aad_login" type="object" string="Re-Login" class="btn-primary" style="margin-right:5px;"/>
+                                <button name="action_oauth_aad_logout" type="object" string="Logout" class="btn-default" style="margin-right:5px;" confirm="Are you sure you want to logout your Office 365 Account? This will stop syncing your data, but will not remove them from your Office account."/>
+                            </div>
+                        </div>
+
+                        <group name="office365_oauth_login" attrs="{'invisible': [('aad_email', '!=', False)]}">
+                            <button name="action_oauth_aad_login" type="object" string="Login with Office 365" class="btn-primary"/>
+                        </group>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <menuitem name="Azure AD" id="menu_azure_ad" sequence="150" parent="base.menu_administration" groups="group_office365_sync_manager"/>
+
+		<menuitem action="action_azure_ad_user" id="menu_azure_ad_user_item" parent="menu_azure_ad" sequence="150" groups="group_office365_sync_manager"/>
+		<menuitem action="action_custom_sync_value" id="menu_azure_ad_custom_sync_value" parent="menu_azure_ad" sequence="150" groups="group_office365_sync_manager"/>
+
+        <menuitem action="action_azure_ad_user_record_link" id="menu_azure_ad_user_record_link" parent="menu_azure_ad" sequence="150" groups="base.group_no_one"/>
+		<menuitem action="action_azure_ad_push_queue_item" id="menu_azure_ad_push_queue_item" parent="menu_azure_ad" sequence="151" groups="base.group_no_one"/>
+		<menuitem action="action_azure_ad_pull_queue_item" id="menu_azure_ad_pull_queue_item" parent="menu_azure_ad" sequence="152" groups="base.group_no_one"/>
+		<menuitem action="action_azure_ad_change_queue_item" id="menu_azure_ad_change_queue_item" parent="menu_azure_ad" sequence="153" groups="base.group_no_one"/>
+	</data>
+</odoo>

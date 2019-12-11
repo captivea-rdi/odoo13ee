@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="ir_cron_azure_ad_process_push_queue" model="ir.cron">
+            <field name="name">Push changes to Office365 users</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">15</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall">0</field>
+            <field name="model_id" ref="model_azure_ad_push_queue_item"/>
+            <field name="state">code</field>
+            <field name="code">model.process_queue()</field>
+        </record>
+
+        <!-- WEBHOOK Enable CRON job after implementation -->
+        <!--<record id="ir_cron_azure_ad_process_pull_queue" model="ir.cron">-->
+            <!--<field name="name">Pull and apply the changes from Office365 users received by WebHook</field>-->
+            <!--<field name="user_id" ref="base.user_root"/>-->
+            <!--<field name="interval_number">15</field>-->
+            <!--<field name="interval_type">minutes</field>-->
+            <!--<field name="numbercall">-1</field>-->
+            <!--<field name="doall">0</field>-->
+            <!--<field name="model">azure.ad.pull.queue.item</field>-->
+            <!--<field name="function">process_queue</field>-->
+        <!--</record>-->
+
+        <record id="ir_cron_azure_ad_process_pull_all_users" model="ir.cron">
+            <field name="name">Pull and apply the changes from all Office365 users</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">30</field>
+            <field name="interval_type">minutes</field>
+            <field name="numbercall">-1</field>
+            <field name="doall">0</field>
+            <field name="model_id" ref="model_azure_ad_pull_queue_item"/>
+            <field name="state">code</field>
+            <field name="code">model.process_for_all_users()</field>
+        </record>
+
+        <record id="ir_cron_azure_ad_refresh_access_users" model="ir.cron">
+            <field name="name">Refresh Access Token for all Office 365 users</field>
+            <field name="user_id" ref="base.user_root"/>
+            <field name="interval_number">1</field>
+            <field name="interval_type">days</field>
+            <field name="nextcall" eval="'%s 00:00:00' % (DateTime.now() + timedelta(days=1)).strftime('%Y-%m-%d')" />
+            <field name="numbercall">-1</field>
+            <field name="doall">0</field>
+            <field name="model_id" ref="model_azure_ad_user"/>
+            <field name="state">code</field>
+            <field name="code">model.refresh_access()</field>
+        </record>
+    </data>
+</odoo>

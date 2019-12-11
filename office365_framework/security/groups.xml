@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record model="ir.module.category" id="module_category_office_365_sync">
+            <field name="name">Office 365 Sync</field>
+            <field name="description">Sync your information with office 365 accounts.</field>
+            <field name="sequence">150</field>
+        </record>
+
+        <record id="group_office365_sync_user" model="res.groups">
+            <field name="name">User</field>
+            <field name="category_id" ref="module_category_office_365_sync"/>
+        </record>
+
+        <record id="group_office365_sync_manager" model="res.groups">
+            <field name="name">Manager</field>
+            <field name="category_id" ref="module_category_office_365_sync"/>
+            <field name="implied_ids" eval="[(4, ref('group_office365_sync_user'))]"/>
+        </record>
+    </data>
+</odoo>

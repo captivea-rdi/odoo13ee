@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+	<data>
+		<record id="azure_ad_push_queue_item_view_tree" model="ir.ui.view">
+			<field name="name">azure.ad.push.queue.item.tree.view</field>
+			<field name="model">azure.ad.push.queue.item</field>
+			<field name="arch" type="xml">
+				<tree string="Azure AD Queue Items">
+					<field name="user_id"/>
+                    <field name="data_domain"/>
+                    <field name="data_id"/>
+                    <field name="link"/>
+                    <field name="last_error"/>
+                    <field name="method"/>
+                    <field name="status"/>
+				</tree>
+			</field>
+		</record>
+
+		<record id="azure_ad_push_queue_item_view_form" model="ir.ui.view">
+			<field name="name">azure.ad.push.queue.item.view.form</field>
+			<field name="model">azure.ad.push.queue.item</field>
+			<field name="arch" type="xml">
+				<form string="Azure AD Queue Items">
+					<sheet>
+						<group>
+							<group>
+								<field name="user_id"/>
+                                <field name="data_domain"/>
+                                <field name="data_id"/>
+                                <field name="link"/>
+                                <field name="data"/>
+                                <field name="last_error"/>
+                                <field name="method"/>
+                                <field name="status"/>
+							</group>
+						</group>
+					</sheet>
+				</form>
+			</field>
+		</record>
+
+		<record id="action_azure_ad_push_queue_item" model="ir.actions.act_window">
+			<field name="name">Push Queue</field>
+			<field name="res_model">azure.ad.push.queue.item</field>
+			<field name="view_type">form</field>
+			<field name="view_mode">tree,form</field>
+			<field name="help" type="html">
+                <p></p>
+			</field>
+		</record>
+	</data>
+</odoo>

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <record id="res_config_settings_view_form" model="ir.ui.view">
+        <field name="name">res.config.settings.view.form.inherit.ooc.setup</field>
+        <field name="model">res.config.settings</field>
+        <field name="inherit_id" ref="base_setup.res_config_settings_view_form"/>
+        <field name="arch" type="xml">
+            <div name="integration" position="after">
+                <h2>Outlook Connector</h2>
+                <div class="row mt16 o_settings_container" name="ooc">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="aad_oauth_enabled"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="aad_oauth_enabled"/>
+                            <div class="text-muted">
+                                Enable outlook synchronisation for your users.
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-md-6 o_setting_box" attrs="{'invisible': [('aad_oauth_enabled', '=', False)]}">
+                        <div class="o_setting_right_pane">
+                            <label for="aad_oauth_client_id"/>
+                            <field name="aad_oauth_client_id" attrs="{'required': [('aad_oauth_enabled', '=', True)]}"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <label for="aad_oauth_client_secret"/>
+                            <field name="aad_oauth_client_secret" attrs="{'required': [('aad_oauth_enabled', '=', True)]}"/>
+                        </div>
+                    </div>
+                </div>
+                <br/>
+            </div>
+        </field>
+    </record>
+</odoo>
