@@ -30,7 +30,6 @@ class AzureAdUserRecordLink(models.Model):
         records = self.env['ir.model'].search([])
         return [(record.model, record.name) for record in records] + [('', '')]
 
-    @api.multi
     def patch(self, change):
         if not change:
             return
@@ -70,7 +69,6 @@ class AzureAdUserRecordLink(models.Model):
 
         return res
 
-    @api.multi
     def delete(self):
         for link in self:
             # If link only syncs from azure to odoo, remove it without deleting data in azure
