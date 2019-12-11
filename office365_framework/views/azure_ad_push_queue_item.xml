@@ -43,7 +43,6 @@
 		<record id="action_azure_ad_push_queue_item" model="ir.actions.act_window">
 			<field name="name">Push Queue</field>
 			<field name="res_model">azure.ad.push.queue.item</field>
-			<field name="view_type">form</field>
 			<field name="view_mode">tree,form</field>
 			<field name="help" type="html">
                 <p></p>
