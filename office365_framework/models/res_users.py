@@ -38,7 +38,6 @@ class ResUsers(models.Model):
     # ------------------------
     # Azure AD OAuth Actions
     # ------------------------
-    @api.multi
     def action_oauth_aad_login(self):
         self.ensure_one()
 
@@ -59,7 +58,6 @@ class ResUsers(models.Model):
             'res_id': self.id,
         }
 
-    @api.multi
     def action_oauth_aad_logout(self):
         self.ensure_one()
 
@@ -67,7 +65,6 @@ class ResUsers(models.Model):
 
         return self.action_open_preferences()
 
-    @api.multi
     def action_start_sync_azure(self):
         """Starts Syncing"""
 
@@ -87,13 +84,11 @@ class ResUsers(models.Model):
 
         return self.action_open_preferences()
 
-    @api.multi
     def action_sync_azure(self):
         self.sync_azure()
 
         return self.action_open_preferences()
 
-    @api.multi
     def sync_azure(self):
         updated = {}
 
@@ -111,7 +106,6 @@ class ResUsers(models.Model):
 
         return updated
 
-    @api.multi
     def action_open_preferences(self):
         return {
             'context': self.env.context,
@@ -127,7 +121,6 @@ class ResUsers(models.Model):
     # ----------------------
     # Azure AD Setup Logic
     # ----------------------
-    @api.multi
     def aad_setup(self):
         """Runs after user connects Azure AD Account (Office 365, Outlook, etc.)"""
 
