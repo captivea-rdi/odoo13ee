@@ -4,7 +4,7 @@ import logging
 
 from odoo import fields, models, api
 
-from ..fields import VirtualReference
+from odoo.fields import Reference
 
 _logger = logging.getLogger(__name__)
 
@@ -17,7 +17,7 @@ class AzureAdUserRecordLink(models.Model):
     data_id = fields.Char(string="Azure AD ID")
     create_domain = fields.Char(string="Azure AD Create Domain")
     push_queue_ids = fields.One2many(comodel_name='azure.ad.push.queue.item', string='Push Queue Items', inverse_name='link')
-    record = VirtualReference(string="Reference", selection='_select_objects')
+    record = Reference(string="Reference", selection='_select_objects')
     sync_type = fields.Selection(string="Sync Way", default='both', selection=[
         ('both', 'Odoo <-> Azure'),
         ('o2a',  'Odoo --> Azure'),
