@@ -27,8 +27,8 @@ class CalendarEvent(models.Model):
             record_link_ids = self.env['azure.ad.user.record.link'].sudo().search(self.get_record_link_domain())
 
             # If not superuser, and record link does not exists with owner email
-            if self.env.user.id != SUPERUSER_ID and len([r for r in record_link_ids if r.user_id.email == self.outlook_owner_email]) != 1:
-                raise UserError(_('The event can not be changed because it has been created in Outlook, and the original owner has not synced the item.'))
+            #if self.env.user.id != SUPERUSER_ID and len([r for r in record_link_ids if r.user_id.email == self.outlook_owner_email]) != 1:
+            #    raise UserError(_('The event can not be changed because it has been created in Outlook, and the original owner has not synced the item.'))
 
         removed_partners = []
         added_partners = []
