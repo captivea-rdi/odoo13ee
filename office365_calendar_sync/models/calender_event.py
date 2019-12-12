@@ -92,36 +92,36 @@ class CalendarEvent(models.Model):
         return res
 
     def create_link(self, partner_id=None):
-        self.ensure_one()
-        # Make eventTemplate
-        ad_event = AzureADEvent(
-            uid=self.id,
-            subject=self.name,
-            body=self.description,
-            start_date=self.start,
-            end_date=self.stop if not self.allday else (self.stop + timedelta(days=1)),
-            all_day=self.allday,
-            location=self.location,
-            attendees={p.email: p.name for p in self.sudo().partner_ids},
-            require_response=False,
-            categories=json.loads(self.outlook_categories) if self.outlook_categories else [],
-        )
-
-        to_sync = partner_id or self.sudo().partner_ids
-
-        for partner in to_sync:
-            # TODO Check if link exists
-            azure_ad_user_id = partner.sudo().azure_ad_user_id
-
-            if azure_ad_user_id:
-                # No link yet
-                if not azure_ad_user_id.record_link_ids.filtered(lambda r: r.record._name == self._name and r.record.id == self.id):
-                    try:
-                        ad_event.categories = list(set(ad_event.categories + [azure_ad_user_id.outlook_category]))
-
-                        azure_ad_user_id.calendar_id.create_outlook_event(self, ad_event, link_attendees=False)
-                    except Exception:
-                        traceback.print_exc()
+        for record in self:
+            # Make eventTemplate
+            ad_event = AzureADEvent(
+                uid=record.id,
+                subject=record.name,
+                body=record.description,
+                start_date=record.start,
+                end_date=record.stop if not record.allday else (record.stop + timedelta(days=1)),
+                all_day=record.allday,
+                location=record.location,
+                attendees={p.email: p.name for p in record.sudo().partner_ids},
+                require_response=False,
+                categories=json.loads(record.outlook_categories) if record.outlook_categories else [],
+            )
+    
+            to_sync = partner_id or record.sudo().partner_ids
+    
+            for partner in to_sync:
+                # TODO Check if link exists
+                azure_ad_user_id = partner.sudo().azure_ad_user_id
+    
+                if azure_ad_user_id:
+                    # No link yet
+                    if not azure_ad_user_id.record_link_ids.filtered(lambda r: r.record._name == record._name and r.record.id == record.id):
+                        try:
+                            ad_event.categories = list(set(ad_event.categories + [azure_ad_user_id.outlook_category]))
+    
+                            azure_ad_user_id.calendar_id.create_outlook_event(record, ad_event, link_attendees=False)
+                        except Exception:
+                            traceback.print_exc()
 
     # ---------
     # Overrides
