@@ -96,7 +96,7 @@ class AzureADCalendar(models.Model):
                 reminders=master['ReminderMinutesBeforeStart'],
                 location=master['Location']['DisplayName'],
                 all_day=master['IsAllDay'],
-                last_modified=master['LastModifiedDateTime']
+                last_modified=datetime.strptime(master['LastModifiedDateTime'][:19], DATETIME_FORMAT)
             ))
 
         self.delta_token = delta_token_new
