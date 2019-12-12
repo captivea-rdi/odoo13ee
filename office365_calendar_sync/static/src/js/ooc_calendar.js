@@ -32,6 +32,7 @@ odoo.define('office365_calendar_sync.ooc_calendar', function (require) {
                 route: '/office365_calendar_sync/sync',
                 params: {
                     model: this.modelName,
+                    async: false,
                     fromurl: window.location.href,
                     local_context: context
                 }
@@ -79,9 +80,8 @@ odoo.define('office365_calendar_sync.ooc_calendar', function (require) {
                         title: _t('Finished Sync')
                     });
                 }
-            }).always(function () {
-                event.data.on_always();
             });
+            event.data.on_always();
         }
     });
 
